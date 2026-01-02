@@ -110,8 +110,10 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('total-pago').innerText = `$${total.toLocaleString('es-AR')}`;
     }
 
+    // TICKET IMPRESO - CON OBSERVACIONES [cite: 2025-12-30]
     window.imprimirTicket = () => {
         const mesa = document.getElementById('cliente-mesa').value;
+        const obs = document.getElementById('cliente-obs').value;
         if (!mesa) return alert("POR FAVOR, INDIQUE NÚMERO DE MESA");
 
         let t = `<html><body style="font-family:monospace; width:280px; padding: 10px;">
@@ -122,9 +124,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 <hr style="border:1px dashed #000">`;
         
         carrito.forEach(i => {
-            // Productos en Mayúsculas, Negrita y tamaño grande para el mozo
-            t += `<p style="margin:10px 0; font-size:20px;"><strong>• ${i.cantidad}x ${i.name.toUpperCase()}</strong></p>`;
+            t += `<p style="margin:10px 0; font-size:18px;"><strong>• ${i.cantidad} X ${i.name.toUpperCase()}</strong></p>`;
         });
+
+        if (obs.trim() !== "") {
+            t += `<hr style="border:1px dashed #000">`;
+            t += `<p style="font-size:16px;"><strong>OBSERVACIONES:</strong><br>${obs.toUpperCase()}</p>`;
+        }
         
         t += `<hr style="border:1px dashed #000">
                 <h3 style="text-align:right">TOTAL: ${document.getElementById('total-pago').innerText}</h3>
@@ -135,25 +141,31 @@ document.addEventListener('DOMContentLoaded', () => {
         v.document.close();
     };
 
+    // WHATSAPP - CON OBSERVACIONES EN MAYÚSCULAS [cite: 2025-12-30]
     window.enviarPedidoWhatsApp = () => {
         const mesa = document.getElementById('cliente-mesa').value;
+        const obs = document.getElementById('cliente-obs').value;
         if (!mesa || carrito.length === 0) return alert("POR FAVOR, INDIQUE NÚMERO DE MESA");
 
-        // Título simple sin negritas
-        let msg = `DELEITTESE - MESA ${mesa}\n\n`;
+        let msg = `DELEITTESE - MESA ${mesa}\n`;
+        msg += `--------------------------\n`;
         
-        // SÓLO LOS PRODUCTOS VAN EN NEGRITA (usando asteriscos) [cite: 2025-12-30]
         carrito.forEach(i => {
-            msg += `• *${i.cantidad}x ${i.name.toUpperCase()}*\n`;
+            msg += `• *${i.cantidad} X ${i.name.toUpperCase()}*\n`;
         });
+
+        if (obs.trim() !== "") {
+            msg += `\n*OBSERVACIONES COCINA:*\n> ${obs.toUpperCase()}\n`;
+        }
         
-        // Total simple sin negritas
-        msg += `\nTOTAL: ${document.getElementById('total-pago').innerText}`;
+        msg += `--------------------------\n`;
+        msg += `TOTAL: ${document.getElementById('total-pago').innerText}`;
         
         window.open(`https://wa.me/5493644679057?text=${encodeURIComponent(msg)}`, '_blank');
         
         carrito = [];
         actualizarInterfaz();
+        document.getElementById('cliente-obs').value = '';
     };
 
     window.llamarMozo = () => {
@@ -163,6 +175,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function displayMenu(cat = 'Todas') {
         const container = document.getElementById('menu-list');
+        if (!container) return;
         container.innerHTML = '';
         const data = cat === 'Todas' ? menuData : menuData.filter(i => i.category === cat);
         data.forEach(item => {
@@ -186,18 +199,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const cats = ['Todas', ...new Set(menuData.map(i => i.category))];
     const catContainer = document.getElementById('category-buttons');
-    cats.forEach(c => {
-        const b = document.createElement('button');
-        b.className = 'btn btn-outline-light btn-sm px-3';
-        b.innerText = c;
-        b.onclick = () => {
-            displayMenu(c);
-            document.querySelectorAll('#category-buttons button').forEach(btn => btn.classList.replace('btn-light', 'btn-outline-light'));
-            b.classList.replace('btn-outline-light', 'btn-light');
-        };
-        if(c==='Todas') b.classList.replace('btn-outline-light', 'btn-light');
-        catContainer.appendChild(b);
-    });
+    if (catContainer) {
+        catContainer.innerHTML = '';
+        cats.forEach(c => {
+            const b = document.createElement('button');
+            b.className = 'btn btn-outline-light btn-sm px-3';
+            b.innerText = c;
+            b.onclick = () => {
+                displayMenu(c);
+                document.querySelectorAll('#category-buttons button').forEach(btn => btn.classList.replace('btn-light', 'btn-outline-light'));
+                b.classList.replace('btn-outline-light', 'btn-light');
+            };
+            if(c==='Todas') b.classList.replace('btn-outline-light', 'btn-light');
+            catContainer.appendChild(b);
+        });
+    }
 
     displayMenu();
 });

@@ -1,28 +1,132 @@
-body { background: #121212; color: #ffffff; font-family: 'Segoe UI', sans-serif; overflow-x: hidden; }
-.bienvenida-texto { color: #ff5722; font-size: 1.1rem; font-style: italic; max-width: 800px; margin: 0 auto 20px; text-align: center; }
+body { 
+    background: #121212; 
+    color: #ffffff; 
+    font-family: 'Segoe UI', sans-serif; 
+    overflow-x: hidden; 
+}
 
-#menu-list { display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; padding: 0; }
+.bienvenida-texto { 
+    color: #ff5722; 
+    font-size: 1.1rem; 
+    font-style: italic; 
+    max-width: 800px; 
+    margin: 0 auto 20px; 
+    text-align: center; 
+}
+
+#menu-list { 
+    display: flex; 
+    flex-wrap: wrap; 
+    gap: 15px; 
+    justify-content: center; 
+    padding: 0; 
+}
 
 /* 4 Columnas [cite: 2025-10-27] */
-.col-item { width: calc(25% - 15px) !important; min-width: 200px; margin-bottom: 20px; flex: 0 0 auto; }
+.col-item { 
+    width: calc(25% - 15px) !important; 
+    min-width: 200px; 
+    margin-bottom: 20px; 
+    flex: 0 0 auto; 
+}
 
-.menu-item-image { height: 250px; object-fit: cover; width: 100%; border-bottom: 1px solid #333; }
-.menu-item-image.img-bebida { object-fit: contain !important; background-color: #1a1a1a; padding: 15px; }
+.menu-item-image { 
+    height: 250px; 
+    object-fit: cover; 
+    width: 100%; 
+    border-bottom: 1px solid #333; 
+}
 
-.menu-card { background: #1e1e1e; color: white; border: 1px solid #333; border-radius: 10px; overflow: hidden; transition: 0.3s; }
-.menu-card:hover { transform: translateY(-5px); border-color: #ffc107; }
+.menu-item-image.img-bebida { 
+    object-fit: contain !important; 
+    background-color: #1a1a1a; 
+    padding: 15px; 
+}
 
-.price { font-size: 1.2rem; font-weight: bold; color: #ffc107 !important; }
-.sin-stock { filter: grayscale(1); opacity: 0.5; }
+.menu-card { 
+    background: #1e1e1e; 
+    color: white; 
+    border: 1px solid #333; 
+    border-radius: 10px; 
+    overflow: hidden; 
+    transition: 0.3s; 
+}
+
+.menu-card:hover { 
+    transform: translateY(-5px); 
+    border-color: #ffc107; 
+}
+
+.price { 
+    font-size: 1.2rem; 
+    font-weight: bold; 
+    color: #ffc107 !important; 
+}
+
+.sin-stock { 
+    filter: grayscale(1); 
+    opacity: 0.5; 
+}
 
 /* Botón Mozo */
 .btn-mozo {
-    position: fixed; bottom: 25px; right: 25px; width: 65px; height: 65px;
-    border-radius: 50%; background: #ffc107; border: none;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.5); font-size: 24px;
-    cursor: pointer; z-index: 999; transition: 0.3s;
+    position: fixed; 
+    bottom: 25px; 
+    right: 25px; 
+    width: 65px; 
+    height: 65px;
+    border-radius: 50%; 
+    background: #ffc107; 
+    border: none;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5); 
+    font-size: 24px;
+    cursor: pointer; 
+    z-index: 999; 
+    transition: 0.3s;
 }
-.btn-mozo:hover { transform: scale(1.1); background: #e0a800; }
 
-@media (max-width: 992px) { .col-item { width: calc(50% - 10px) !important; } }
-@media (max-width: 576px) { .col-item { width: 100% !important; } }
+.btn-mozo:hover { 
+    transform: scale(1.1); 
+    background: #e0a800; 
+}
+
+/* Media Queries corregidas */
+@media (max-width: 992px) { 
+    .col-item { width: calc(50% - 10px) !important; } 
+}
+
+@media (max-width: 576px) { 
+    .col-item { width: 100% !important; } 
+}
+
+/* --- ESTILO DE OBSERVACIONES (CORREGIDO) --- */
+
+/* Color del texto de ejemplo (placeholder) [cite: 2025-10-27] */
+#cliente-obs::placeholder {
+    color: rgba(255, 255, 255, 0.5) !important; /* Blanco traslúcido al 50% */
+    font-style: italic;
+    font-size: 0.9rem;
+    opacity: 1; /* Necesario para que Firefox no lo aclare más */
+}
+
+/* Soporte para Chrome, Safari y Edge */
+#cliente-obs::-webkit-input-placeholder { 
+    color: rgba(255, 255, 255, 0.5) !important; 
+}
+
+/* Soporte para Firefox */
+#cliente-obs::-moz-placeholder { 
+    color: rgba(255, 255, 255, 0.5) !important; 
+}
+
+/* Soporte para Internet Explorer/Edge antiguo */
+#cliente-obs:-ms-input-placeholder { 
+    color: rgba(255, 255, 255, 0.5) !important; 
+}
+
+/* Efecto opcional: Brillo al hacer clic en observaciones */
+#cliente-obs:focus {
+    border-color: #ffc107;
+    box-shadow: 0 0 8px rgba(255, 193, 7, 0.3);
+    outline: none;
+}

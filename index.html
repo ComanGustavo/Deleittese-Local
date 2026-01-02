@@ -26,15 +26,13 @@
 
     <div class="container my-5">
         <div class="text-center mb-5">
-            
             <div class="row justify-content-center mb-4">
                 <div class="col-md-10 col-lg-9">
                     <p class="fs-4 mb-0" style="font-family: 'Playfair Display', serif; color: #dc3545; line-height: 1.6; font-style: italic;">
-                        "Excelencia local y sabor auténtico. En Deleitesse, combinamos ingredientes premium con una propuesta gastronómica variada para superar las expectativas de nuestros clientes. Miramos hacia el futuro con la ambición de seguir creciendo y consolidarnos como el referente gastronómico de nuestra zona."
+                        "Excelencia local y sabor auténtico. En Deleitesse, combinamos ingredientes premium con una propuesta gastronómica variada para superar las expectativas de nuestros clientes."
                     </p>
                 </div>
             </div>
-
             <h1 class="text-primary fw-bold display-4">📍 Menú Premium</h1>
         </div>
 
@@ -54,6 +52,11 @@
                     <input type="number" id="cliente-mesa" class="form-control mb-3 bg-dark text-white border-primary text-center fs-2 fw-bold" placeholder="MESA">
                     
                     <ul id="lista-carrito" class="list-group mb-3"></ul>
+
+                    <div class="mb-3">
+                        <label for="cliente-obs" class="form-label text-warning fw-bold small">OBSERVACIONES PARA COCINA:</label>
+                        <textarea class="form-control bg-dark text-white border-secondary" id="cliente-obs" rows="2" placeholder="Ej: Sin cebolla, carne bien cocida, sin aderezos..."></textarea>
+                    </div>
                     
                     <div class="d-flex justify-content-between fw-bold fs-3 text-warning">
                         <span>Total:</span> <span id="total-pago">$0</span>
