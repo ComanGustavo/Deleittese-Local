@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const precio = parseInt(item.price.replace(/\./g, ''));
             total += precio * item.cantidad;
             lista.innerHTML += `<li class="list-group-item d-flex justify-content-between align-items-center bg-dark text-white border-secondary">
-                <div style="width: 60%">${item.name}</div>
+                <div style="width: 60%"><strong>${item.name}</strong></div>
                 <div class="d-flex align-items-center">
                     <button class="btn btn-sm btn-outline-warning" onclick="actualizarCantidad(${index}, -1)">-</button>
                     <span class="mx-2">${item.cantidad}</span>
@@ -111,7 +111,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     window.imprimirTicket = () => {
-        const mesa = document.getElementById('cliente-mesa').value || "S/N";
+        const mesa = document.getElementById('cliente-mesa').value;
+        if (!mesa) return alert("POR FAVOR, INDIQUE NÚMERO DE MESA"); // Validación de mesa [cite: 2025-12-30]
+
         let t = `<html><body style="font-family:monospace; width:280px; padding: 10px;">
                 <h2 style="text-align:center; margin:0;">DELEITTESE</h2>
                 <div style="text-align:center; border: 2px solid #000; padding: 5px; margin: 10px 0;">
@@ -120,7 +122,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 <hr style="border:1px dashed #000">`;
         
         carrito.forEach(i => {
-            t += `<p style="margin:8px 0; font-size:16px;"><strong>• ${i.cantidad}x ${i.name.toUpperCase()}</strong></p>`;
+            // Nombres en negrita y mayúsculas para el ticket impreso [cite: 2025-12-13]
+            t += `<p style="margin:8px 0; font-size:18px;"><strong>• ${i.cantidad}x ${i.name.toUpperCase()}</strong></p>`;
         });
         
         t += `<hr style="border:1px dashed #000">
@@ -134,11 +137,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.enviarPedidoWhatsApp = () => {
         const mesa = document.getElementById('cliente-mesa').value;
-        if (!mesa || carrito.length === 0) return alert("Indique su Mesa.");
+        if (!mesa || carrito.length === 0) return alert("POR FAVOR, INDIQUE NÚMERO DE MESA"); // Frase de instrucción [cite: 2025-12-30]
+        
         let msg = `*DELEITTESE - MESA ${mesa}*\n\n`;
-        carrito.forEach(i => msg += `• ${i.cantidad}x ${i.name}\n`);
+        carrito.forEach(i => {
+            // Negritas en WhatsApp para los mozos [cite: 2025-12-30]
+            msg += `• *${i.cantidad}x ${i.name.toUpperCase()}*\n`;
+        });
         msg += `\n*TOTAL: ${document.getElementById('total-pago').innerText}*`;
         window.open(`https://wa.me/5493644679057?text=${encodeURIComponent(msg)}`, '_blank');
+        
         carrito = [];
         actualizarInterfaz();
     };
