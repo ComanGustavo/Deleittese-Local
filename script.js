@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.imprimirTicket = () => {
         const mesa = document.getElementById('cliente-mesa').value;
-        if (!mesa) return alert("POR FAVOR, INDIQUE NÚMERO DE MESA"); // Validación de mesa [cite: 2025-12-30]
+        if (!mesa) return alert("POR FAVOR, INDIQUE NÚMERO DE MESA");
 
         let t = `<html><body style="font-family:monospace; width:280px; padding: 10px;">
                 <h2 style="text-align:center; margin:0;">DELEITTESE</h2>
@@ -122,8 +122,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 <hr style="border:1px dashed #000">`;
         
         carrito.forEach(i => {
-            // Nombres en negrita y mayúsculas para el ticket impreso [cite: 2025-12-13]
-            t += `<p style="margin:8px 0; font-size:18px;"><strong>• ${i.cantidad}x ${i.name.toUpperCase()}</strong></p>`;
+            // Productos en Mayúsculas, Negrita y tamaño grande para el mozo
+            t += `<p style="margin:10px 0; font-size:20px;"><strong>• ${i.cantidad}x ${i.name.toUpperCase()}</strong></p>`;
         });
         
         t += `<hr style="border:1px dashed #000">
@@ -137,14 +137,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.enviarPedidoWhatsApp = () => {
         const mesa = document.getElementById('cliente-mesa').value;
-        if (!mesa || carrito.length === 0) return alert("POR FAVOR, INDIQUE NÚMERO DE MESA"); // Frase de instrucción [cite: 2025-12-30]
+        if (!mesa || carrito.length === 0) return alert("POR FAVOR, INDIQUE NÚMERO DE MESA");
+
+        // Título simple sin negritas
+        let msg = `DELEITTESE - MESA ${mesa}\n\n`;
         
-        let msg = `*DELEITTESE - MESA ${mesa}*\n\n`;
+        // SÓLO LOS PRODUCTOS VAN EN NEGRITA (usando asteriscos) [cite: 2025-12-30]
         carrito.forEach(i => {
-            // Negritas en WhatsApp para los mozos [cite: 2025-12-30]
             msg += `• *${i.cantidad}x ${i.name.toUpperCase()}*\n`;
         });
-        msg += `\n*TOTAL: ${document.getElementById('total-pago').innerText}*`;
+        
+        // Total simple sin negritas
+        msg += `\nTOTAL: ${document.getElementById('total-pago').innerText}`;
+        
         window.open(`https://wa.me/5493644679057?text=${encodeURIComponent(msg)}`, '_blank');
         
         carrito = [];
